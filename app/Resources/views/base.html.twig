@@ -3,11 +3,38 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+    {% block stylesheets %}{% endblock %}
+    {% block javascripts %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+    {% block menu %}
+        <div>
+            {% if not is_granted("IS_AUTHENTICATED_FULLY") %}
+                <a href="{{ path("login") }}">Connexion</a>
+            {% else %}
+                <a href="{{ path("logout") }}">Déconnexion</a>
+                {% if is_granted("ROLE_CLIENT") %}
+
+                    Menu client:
+
+                    <a href="{{ path("ajouter_course") }}">Nouvelle course</a>
+
+                {% elseif is_granted("ROLE_LIVREUR") %}
+
+                    Menu livreur:
+                {% elseif is_granted("ROLE_ADMIN") %}
+
+                    Menu admin:
+
+                    <a href="{{ path("course_index") }}">Courses</a>
+                    <a href="{{ path("utilisateur_index") }}">Utilisateurs</a>
+
+                {% endif %}
+            {% endif %}
+
+        </div>
+    {% endblock %}
+{% block body %}{% endblock %}
+</body>
 </html>

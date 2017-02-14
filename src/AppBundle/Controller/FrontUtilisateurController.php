@@ -8,6 +8,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class FrontUtilisateurController extends Controller {
 
     /**
+     * @Route("/ajouter_course", name="ajouter_course")
+     */
+    public function ajouterCourseAction(){
+        
+        return $this->render('AppBundle:FrontUtilisateur:ajouter_course.html.twig', array(
+            
+        ) );
+    }
+    
+    /**
      * @Route("/login", name="login")
      */
     public function loginAction() {
