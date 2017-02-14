@@ -134,4 +134,81 @@ class Course
     {
         return $this->etat;
     }
+    
+    public function __toString() {
+        
+        return $this->adresseCollecte . " " . $this->adresseLivraison;
+    }
+
+    /**
+     * Set prix
+     *
+     * @param float $prix
+     *
+     * @return Course
+     */
+    public function setPrix($prix)
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    /**
+     * Get prix
+     *
+     * @return float
+     */
+    public function getPrix()
+    {
+        return $this->prix;
+    }
+
+    /**
+     * Set utilClient
+     *
+     * @param \AppBundle\Entity\Utilisateur $utilClient
+     *
+     * @return Course
+     */
+    public function setUtilClient(\AppBundle\Entity\Utilisateur $utilClient = null)
+    {
+        $this->utilClient = $utilClient;
+
+        return $this;
+    }
+
+    /**
+     * Get utilClient
+     *
+     * @return \AppBundle\Entity\Utilisateur
+     */
+    public function getUtilClient()
+    {
+        return $this->utilClient;
+    }
+
+    /**
+     * Set utilLivreur
+     *
+     * @param \AppBundle\Entity\Utilisateur $utilLivreur
+     *
+     * @return Course
+     */
+    public function setUtilLivreur(\AppBundle\Entity\Utilisateur $utilLivreur = null)
+    {
+        $this->utilLivreur = $utilLivreur;
+
+        return $this;
+    }
+
+    /**
+     * Get utilLivreur
+     *
+     * @return \AppBundle\Entity\Utilisateur
+     */
+    public function getUtilLivreur()
+    {
+        return $this->utilLivreur;
+    }
 }

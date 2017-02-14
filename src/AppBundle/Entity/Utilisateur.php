@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="utilisateur")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UtilisateurRepository")
  */
-class Utilisateur
+class Utilisateur implements \Symfony\Component\Security\Core\User\UserInterface
 {
     /**
      * @var int
@@ -155,5 +155,108 @@ class Utilisateur
     public function getRole()
     {
         return $this->role;
+    }
+
+    public function eraseCredentials() {
+        
+    }
+
+    public function getPassword(): string {
+        
+        return $this->mdp;
+    }
+
+    public function getRoles() {
+        
+        return array($this->role);
+    }
+
+    public function getSalt() {
+        
+    }
+
+    public function getUsername(): string {
+        
+        return $this->login;
+    }
+
+    public function __toString() {
+        return $this->login;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->courseDemandees = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->courseEffectuees = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add courseDemandee
+     *
+     * @param \AppBundle\Entity\Course $courseDemandee
+     *
+     * @return Utilisateur
+     */
+    public function addCourseDemandee(\AppBundle\Entity\Course $courseDemandee)
+    {
+        $this->courseDemandees[] = $courseDemandee;
+
+        return $this;
+    }
+
+    /**
+     * Remove courseDemandee
+     *
+     * @param \AppBundle\Entity\Course $courseDemandee
+     */
+    public function removeCourseDemandee(\AppBundle\Entity\Course $courseDemandee)
+    {
+        $this->courseDemandees->removeElement($courseDemandee);
+    }
+
+    /**
+     * Get courseDemandees
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCourseDemandees()
+    {
+        return $this->courseDemandees;
+    }
+
+    /**
+     * Add courseEffectuee
+     *
+     * @param \AppBundle\Entity\Course $courseEffectuee
+     *
+     * @return Utilisateur
+     */
+    public function addCourseEffectuee(\AppBundle\Entity\Course $courseEffectuee)
+    {
+        $this->courseEffectuees[] = $courseEffectuee;
+
+        return $this;
+    }
+
+    /**
+     * Remove courseEffectuee
+     *
+     * @param \AppBundle\Entity\Course $courseEffectuee
+     */
+    public function removeCourseEffectuee(\AppBundle\Entity\Course $courseEffectuee)
+    {
+        $this->courseEffectuees->removeElement($courseEffectuee);
+    }
+
+    /**
+     * Get courseEffectuees
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCourseEffectuees()
+    {
+        return $this->courseEffectuees;
     }
 }
