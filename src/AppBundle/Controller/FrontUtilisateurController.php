@@ -10,10 +10,18 @@ class FrontUtilisateurController extends Controller {
     /**
      * @Route("/ajouter_course", name="ajouter_course")
      */
-    public function ajouterCourseAction(){
+    public function ajouterCourseAction(\Symfony\Component\HttpFoundation\Request $request){
+        
+        $form = $this->createForm( \AppBundle\Form\CourseType::class );
+        $form->remove("etat")->remove("prix")->remove("utilClient")->remove("utilLivreur");
+        $form->handleRequest($request);
+        
+        if( $form->isSubmitted() ){// POST
+            
+        }
         
         return $this->render('AppBundle:FrontUtilisateur:ajouter_course.html.twig', array(
-            
+            "form"=>$form->createView()
         ) );
     }
     

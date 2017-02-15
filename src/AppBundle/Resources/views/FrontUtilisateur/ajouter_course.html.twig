@@ -4,7 +4,7 @@
 
 {% block stylesheets %}
     <style type="text/css">
-      #map { height: 300px; width: 300px; }
+        #map { height: 300px; width: 300px; }
     </style>
 
 {% endblock %}
@@ -12,20 +12,55 @@
 {% block body %}
 
     <h1>Nouvelle course</h1>
+    {{ form(form) }}
+    <input type="button" value="Rechercher" onclick="ajusterCarte();"/>
     <div id="map"></div>
     <script type="text/javascript">
 
-var map;
-function initMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: -34.397, lng: 150.644},
-    zoom: 8
-  });
-}
+        var map;
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: -34.397, lng: 150.644},
+                zoom: 8
+            });
+        }
+
+        /**
+         * Ajuste la carte en fonction des adresses
+         * @returns {undefined}
+         */
+        function ajusterCarte() {
+
+            adrClient = $("input:nth(0)").val();
+            adrLivraison = $("input:nth(1)").val();
+
+            var service = new google.maps.DistanceMatrixService();
+            service.getDistanceMatrix(
+                    {
+                        origins: [adrClient],
+                        destinations: [adrLivraison],
+                        travelMode: google.maps.TravelMode.BICYCLING,
+                    }, function(response, status){// Callback
+                        
+                        if( status != "OK" ){
+                            alert("Pas de distance trouvée");
+                            return;
+                        }
+                        
+                        var elements = response.rows[0].elements[0];
+                        var distanceEnMetres = elements.distance.value;
+                        var dureeEnSecondes = elements.duration.value;
+                        
+                        alert( "Distance: " + elements.distance.text + " ,durée: " + elements.duration.text );
+                        
+                        
+                        console.log(elements);
+                    });
+        }
 
     </script>
     <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgas_t9fxRMpdqLRupGAhpNtlkUipuPD0&callback=initMap">
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgas_t9fxRMpdqLRupGAhpNtlkUipuPD0&callback=initMap">
     </script>
 
 
